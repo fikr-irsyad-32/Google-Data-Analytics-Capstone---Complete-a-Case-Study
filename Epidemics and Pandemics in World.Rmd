@@ -1,0 +1,84 @@
+---
+title: "Epidemics and Pandemics in World History"
+author: "Irsyad"
+date: "2025-05-11"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# readxl untuk import excel
+```{r}
+library(readxl)
+```
+
+# tidyverse untuk membuat plot
+```{r}
+library (tidyverse)
+```
+
+# Scales untuk menyesuaikan label plot
+```{r}
+library(scales)
+```
+
+# Memanggil Data dan memasukkan ke dalam variable 'Pandemi'
+```{r}
+Pandemi <- read_excel("D:/Data Analyst/1. Comprehensive/2. Coursera (Google Data Analytics Professional Certificate)/8. Google Data Analytics Capstone - Complete a Case Study/Major Epidemics and Pandemics - Process.xlsx")
+```
+
+
+# Membuat kolom sementara bernama 'Legend' yang berisikan variable yang akan dibedakan warnanya
+```{r}
+Pandemi$Legend <-   ifelse(Pandemi$No. == 8, "Black Death (Epidemic)",
+                    ifelse(Pandemi$No. == 211, "Covid-19 (Pandemic)",
+                    ifelse(Pandemi$No. == 111, "Spanish flu (Pandemic)",
+                    ifelse(Pandemi$No. == 132, "HIV/AIDS (Pandemic)",
+                    ifelse(Pandemi$No. == 105, "Kuru (Epidemic)",
+                    ifelse(Pandemi$No. == 4, "Plague of Justinian (Epidemic)",
+                    ifelse(Pandemi$Location == "Worldwide", "Other Pandemic", "Other Epidemic")))))))
+```
+
+
+# Memberi urutan pada Legend
+```{r}
+Pandemi$Legend <- factor(Pandemi$Legend, levels = c(
+  "Black Death (Epidemic)",
+  "Plague of Justinian (Epidemic)",
+  "Spanish flu (Pandemic)",
+  "HIV/AIDS (Pandemic)",
+  "Covid-19 (Pandemic)",
+  "Kuru (Epidemic)",
+  "Other Epidemic",
+  "Other Pandemic"
+))
+```
+
+
+# 1. Membuat plot dengan warna sesuai kolom 'Legend'
+ggplot(data = Pandemi) + geom_jitter(mapping = aes(x = `Duration (year)`, y = `Death toll (estimate)`, color = Legend)) + scale_color_manual(values = c("Other Pandemic" = "orange", "Other Epidemic" = "gray", "Covid-19 (Pandemic)" = "red", "Black Death (Epidemic)" = "black", "Spanish flu (Pandemic)" = "brown", "HIV/AIDS (Pandemic)" = "hotpink", "Plague of Justinian (Epidemic)" = "midnightblue", "Kuru (Epidemic)" = "darkgreen")) +
+
+# 2. Merapikan label sumbu Y dari 1e-6 menjadi M (million) dan membuat grafik bertema minimal
+scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + theme_minimal() +
+
+# 3. Menambahkan title, subtitle, dan caption
+labs (title = 'Epidemics and Pandemics in World History', subtitle = 'Death & Duration of Epidemic and Pandemic per 2023', caption =  'Dataset Source: Raj Kumar Pandey via Kaggle') +
+
+# 4. Menambahkan anotasi
+annotate('text', x = 30, y = 200000000, label = 'Black Death', color = 'black', fontface = 'bold', size = 4) + annotate('text', x = 22, y = 32000000, label = 'Covid-19', color = 'red', fontface = 'bold', size = 4) + annotate('text', x = 60, y = 42500000, label = 'HIV/AIDS', color = 'hotpink', fontface = 'bold', size = 4) + annotate('text', x = 15, y = 90000000, label = 'Spanish flu', color = 'brown', fontface = 'bold', size = 4) + annotate('text', x = 40, y = 110000000, label = 'Plague of Justinian', color = 'midnightblue', fontface = 'bold', size = 4) + annotate('text', x = 98, y = 0, label = 'Kuru', color = 'darkgreen', fontface = 'bold', size = 4)
+
+
+# Gabungan 1-4
+```{r}
+ggplot(data = Pandemi) + geom_jitter(mapping = aes(x = `Duration (year)`, y = `Death toll (estimate)`, color = Legend)) + scale_color_manual(values = c("Other Pandemic" = "orange", "Other Epidemic" = "gray", "Covid-19 (Pandemic)" = "red", "Black Death (Epidemic)" = "black", "Spanish flu (Pandemic)" = "brown", "HIV/AIDS (Pandemic)" = "hotpink", "Plague of Justinian (Epidemic)" = "midnightblue", "Kuru (Epidemic)" = "darkgreen")) + scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + theme_minimal() + labs (title = 'Epidemics and Pandemics in World History', subtitle = 'Death & Duration of Epidemic and Pandemic per 2023', caption =  'Dataset Source: Raj Kumar Pandey via Kaggle') + annotate('text', x = 30, y = 205000000, label = 'Black Death', color = 'black', fontface = 'bold', size = 4) + annotate('text', x = 22, y = 33000000, label = 'Covid-19', color = 'red', fontface = 'bold', size = 4) + annotate('text', x = 60, y = 46000000, label = 'HIV/AIDS', color = 'hotpink', fontface = 'bold', size = 4) + annotate('text', x = 15, y = 90000000, label = 'Spanish flu', color = 'brown', fontface = 'bold', size = 4) + annotate('text', x = 42, y = 105000000, label = 'Plague of Justinian', color = 'midnightblue', fontface = 'bold', size = 4) + annotate('text', x = 98, y = 0, label = 'Kuru', color = 'darkgreen', fontface = 'bold', size = 4)
+```
+
+
+
+
+
+
+
+
+
+
