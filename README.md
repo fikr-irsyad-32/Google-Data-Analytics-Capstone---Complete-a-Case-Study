@@ -2,6 +2,8 @@
 
 This R-based analysis explores the relationship between death toll and duration across major epidemics and pandemics throughout history.
 
+![Endemics and Pandemics](Endemics and Pandemics in World.png)
+
 ### Key Insights:
 1. A global spread (i.e., being a pandemic) doesn’t necessarily correlate with higher mortality. Some pandemics had relatively low death tolls, and vice versa.
 2. The duration also does not correlate with its death toll. Remarkably, the three deadliest plagues in history lasted less than a decade.
